@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Authentication Page</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      --container-bg: #fff;
+      --container-shadow: rgba(31, 38, 135, 0.2);
+      --primary: #2575fc;
+      --secondary: #6a11cb;
+      --input-bg: #f7f9fa;
+      --input-border: #e0e0e0;
+      --input-focus: #2575fc;
+      --text-main: #333;
+      --text-muted: #888;
+      --button-bg: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+      --button-hover-bg: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+      --forgot-link: #6a11cb;
+      --forgot-link-hover: #2575fc;
+    }
+    body {
+      background: var(--bg-gradient);
+      font-family: 'Montserrat', Arial, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+    .mode-toggle {
+      position: absolute;
+      top: 32px;
+      right: 40px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mode-toggle button {
+      background: var(--container-bg);
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(37,117,252,0.08);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+    .auth-container {
+      background: var(--container-bg);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px 0 var(--container-shadow);
+      max-width: 370px;
+      width: 100%;
+      padding: 40px 32px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 1s;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .auth-container h2 {
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+      transition: color 0.3s;
+    }
+    .auth-container label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 500;
+      color: var(--text-main);
+      letter-spacing: 0.5px;
+      transition: color 0.3s;
+    }
+    .auth-container input[type="email"],
+    .auth-container input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      border: 1.5px solid var(--input-border);
+      border-radius: 8px;
+      font-size: 16px;
+      background: var(--input-bg);
+      transition: border 0.2s, background 0.3s, color 0.3s;
+      outline: none;
+      color: var(--text-main);
+    }
+    .auth-container input[type="email"]:focus,
+    .auth-container input[type="password"]:focus {
+      border: 1.5px solid var(--input-focus);
+      background: #fff;
+    }
+    .auth-container button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background: var(--button-bg);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(37,117,252,0.08);
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 10px;
+    }
+    .auth-container button[type="submit"]:hover {
+      background: var(--button-hover-bg);
+      transform: translateY(-2px) scale(1.02);
+    }
+    .auth-container .forgot {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--forgot-link);
+      text-decoration: none;
+      transition: color 0.2s;
+      display: inline-block;
+    }
+    .auth-container .forgot:hover {
+      color: var(--forgot-link-hover);
+      text-decoration: underline;
+    }
+    .auth-container .signup {
+      margin-top: 22px;
+      font-size: 15px;
+      color: var(--text-muted);
+      text-align: center;
+      transition: color 0.3s;
+    }
+    .auth-container .signup a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 4px;
+      transition: color 0.2s;
+    }
+    .auth-container .signup a:hover {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
+    /* Dark mode styles */
+    body.dark {
+      --bg-gradient: linear-gradient(135deg, #232526 0%, #414345 100%);
+      --container-bg: #232526;
+      --container-shadow: rgba(31, 38, 135, 0.35);
+      --primary: #6a11cb;
+      --secondary: #2575fc;
+      --input-bg: #2c2f36;
+      --input-border: #444;
+      --input-focus: #6a11cb;
+      --text-main: #f7f9fa;
+      --text-muted: #bbb;
+      --button-bg: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+      --button-hover-bg: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+      --forgot-link: #6a11cb;
+      --forgot-link-hover: #2575fc;
+    }
+  </style>
+</head>
+<body>
+  <div class="mode-toggle">
+    <button id="lightBtn" title="Light Mode" aria-label="Light Mode">🌞</button>
+    <button id="darkBtn" title="Dark Mode" aria-label="Dark Mode">🌜</button>
+  </div>
+  <div class="auth-container">
+    <h2>Sign In</h2>
+    <form>
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+      <button type="submit">Login</button>
+    </form>
+    <a href="#" class="forgot">Forgot password?</a>
+    <div class="signup">
+      Don't have an account?
+      <a href="#">Sign up</a>
+    </div>
+  </div>
+  <script>
+    const lightBtn = document.getElementById('lightBtn');
+    const darkBtn = document.getElementById('darkBtn');
+    lightBtn.onclick = () => {
+      document.body.classList.remove('dark');
+    };
+    darkBtn.onclick = () => {
+      document.body.classList.add('dark');
+    };
+    // Optional: Remember mode
+    if (window.localStorage) {
+      lightBtn.onclick = () => {
+        document.body.classList.remove('dark');
+        localStorage.setItem('mode', 'light');
+      };
+      darkBtn.onclick = () => {
+        document.body.classList.add('dark');
+        localStorage.setItem('mode', 'dark');
+      };
+      if (localStorage.getItem('mode') === 'dark') {
+        document.body.classList.add('dark');
+      }
+    }
+  </script>
+</body>
+</html>
